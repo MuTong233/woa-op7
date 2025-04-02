@@ -52,6 +52,8 @@ fastboot boot path\to\moddedtwrp.img
 > Keep these backups in a safe place. If your device's software ever gets destroyed, you might need these backups or your phone could lose cellular capabilities.
 >
 > If you've got anything else you want to back up, do this now. Your Android data will be erased in the next steps.
+>
+> If you don't have USB connection or TWRP prompts mount failed for tons of devices, using a regular TWRP instead.
 ```cmd
 cmd /c "for %i in (fsg,fsc,modemst1,modemst2) do (adb shell dd if=/dev/block/by-name/%i of=/tmp/%i.bin & adb pull /tmp/%i.bin)"
 ```
@@ -60,12 +62,16 @@ cmd /c "for %i in (fsg,fsc,modemst1,modemst2) do (adb shell dd if=/dev/block/by-
 > This will back up your boot image in the current directory (which should be the **platform-tools** folder)
 >
 > Replug the cable if it says "no devices/emulators found"
+>
+> Or use a regular TWRP image.
 ```cmd
 adb pull /dev/block/by-name/boot_a boot.img
 ```
 
 ### Fixing the GPT
 > If you do not do this, Windows may break your device
+>
+> If you don't have an ADB USB connection to PC for above reason, using Terminal in TWRP instead of cmd. (Also remove "adb shell")
 ```cmd
 adb shell fixgpt
 ```
@@ -131,6 +137,8 @@ quit
 
 ### Formatting data
 - Format all data in TWRP, or Android will not boot.
+- If you have errors in previous steps, use regular TWRP to do this.
+- Just directly reboot into bootloader, then load your TWRP image.
 - ( Go to Wipe > Format data > type yes )
 
 #### Check if Android still starts
@@ -140,6 +148,7 @@ quit
 
 ### Formatting Windows and ESP drives
 > Reboot into the modded TWRP, then run the below command
+> If no USB connection, use TWRP's terminal.
 ```cmd
 adb shell format
 ```
